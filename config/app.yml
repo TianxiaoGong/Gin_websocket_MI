@@ -1,0 +1,14 @@
+mysql:
+  user: root
+  password: 19990609gtx
+  host: 127.0.0.1
+  port: 3306
+  db_name: ginchat
+#  dns: root:19990609gtx@tcp(127.0.0.1:3306)/ginchat?charset=utf8mb4&parseTime=True&loc=Local
+redis:
+  addr: "127.0.0.1"
+  port: "6379"
+  password: ""
+  db: 0
+  poolSize: 30
+  minIdleConn: 30
