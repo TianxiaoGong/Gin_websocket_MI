@@ -95,7 +95,7 @@ func Subscribe(ctx context.Context, channel string) (string, error) {
 	sub := Rdb.Subscribe(ctx, channel)
 	fmt.Println("subscribe ctx1", ctx)
 	message, err := sub.ReceiveMessage(ctx)
-	fmt.Println("subscribe ctx2", ctx)
+	//fmt.Println("subscribe ctx2", ctx)
 	if err != nil {
 		fmt.Println("sub.ReceiveMessage err", err)
 	}
