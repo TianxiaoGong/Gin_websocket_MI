@@ -200,9 +200,9 @@
                         }
                         var that = this;
                         for(var id in res){
-                            //console.log("res[i]",id,res[id])
                             post(res[id],{},function(pkginfo){
-                                //console.log("post res[i]",id,res[id],pkginfo)
+                            // this.$http.get(res[id]).then(response=>{
+                            //     pkginfo = response.data
                                 var baseurl= config.baseurl+"/"+pkginfo.id+"/"
                                 for(var j in pkginfo.assets){
                                     pkginfo.assets[j] = baseurl+pkginfo.assets[j];
@@ -250,7 +250,7 @@
                     sendpicmsg:function(picurl){
                         //{id:1,userid:2,dstid:3,cmd:10,media:4,url:"http://www.baidu.com/a/log,jpg"}
                         var msg =this.createmsgcontext();
-                        msg.media=4;
+                        msg.Media=4;
                         msg.url=picurl;
                         this.showmsg(userInfo(),msg)
                         this.webSocket.send(JSON.stringify(msg))

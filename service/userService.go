@@ -143,7 +143,7 @@ func LoginByNameAndPwd(c *gin.Context) {
 // @Tags 用户模块
 // @param userId query string false "用户id"
 // @Success 200 {string} json{"code","msg","data“}
-// @Router /user/searchFriends[post]
+// @Router /user/searchFriends [post]
 func SearchFriends(c *gin.Context) {
 	cd := dao.NewContactDao()
 	ID, _ := strconv.Atoi(c.Request.FormValue("userId"))

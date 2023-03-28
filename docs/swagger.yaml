@@ -1,6 +1,12 @@
 info:
   contact: {}
 paths:
+  /attach/upload:
+    post:
+      responses: {}
+      summary: 发送图片
+      tags:
+      - 信息模块
   /index:
     get:
       responses:
@@ -22,6 +28,15 @@ paths:
       summary: 发送信息
       tags:
       - 信息模块
+  /toChat:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      tags:
+      - 首页
   /toRegister:
     get:
       responses:
@@ -100,6 +115,21 @@ paths:
           schema:
             type: string
       summary: 用户登录
+      tags:
+      - 用户模块
+  /user/searchFriends:
+    post:
+      parameters:
+      - description: 用户id
+        in: query
+        name: userId
+        type: string
+      responses:
+        "200":
+          description: code","msg","data“}
+          schema:
+            type: string
+      summary: 查询好友列表
       tags:
       - 用户模块
   /user/updateUser:

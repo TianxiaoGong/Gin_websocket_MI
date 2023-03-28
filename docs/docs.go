@@ -16,6 +16,15 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/attach/upload": {
+            "post": {
+                "tags": [
+                    "信息模块"
+                ],
+                "summary": "发送图片",
+                "responses": {}
+            }
+        },
         "/index": {
             "get": {
                 "tags": [
@@ -47,6 +56,21 @@ const docTemplate = `{
                 ],
                 "summary": "发送信息",
                 "responses": {}
+            }
+        },
+        "/toChat": {
+            "get": {
+                "tags": [
+                    "首页"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
             }
         },
         "/toRegister": {
@@ -163,6 +187,30 @@ const docTemplate = `{
                         "type": "string",
                         "description": "确认密码",
                         "name": "repassword",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\",\"msg\",\"data“}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/searchFriends": {
+            "post": {
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "查询好友列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户id",
+                        "name": "userId",
                         "in": "query"
                     }
                 ],
