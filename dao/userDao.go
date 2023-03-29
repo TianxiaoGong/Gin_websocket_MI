@@ -36,6 +36,12 @@ func (ud *UserDao) LoginByNameAndPwd(name, password string) models.UserBasic {
 	return user
 }
 
+func (ud *UserDao) FindUserByID(id uint) models.UserBasic {
+	user := models.UserBasic{}
+	utils.DB.Where("id = ?", id).First(&user)
+	return user
+}
+
 func (ud *UserDao) FindUserByName(name string) models.UserBasic {
 	user := models.UserBasic{}
 	utils.DB.Where("name = ?", name).First(&user)

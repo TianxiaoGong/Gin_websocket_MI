@@ -9,7 +9,7 @@ type Contact struct {
 	gorm.Model
 	OwnerId  uint   //谁的关系
 	TargetId uint   //对应的谁
-	Type     int    //对应的类型 1好友 2群 3
+	Type     int    //对应的类型 1好友 2群
 	Desc     string //描述
 }
 

@@ -364,7 +364,7 @@
                     },
                     _addfriend:function(dstobj){
                         var that = this
-                        post("contact/addfriend",{dstid:dstobj,userId: userId()},function(res){
+                        post("user/addFriend",{targetId:dstobj,userId: userId()},function(res){
                             if(res.code==0){
                                 mui.toast("添加成功");
                                 that.loadfriends();

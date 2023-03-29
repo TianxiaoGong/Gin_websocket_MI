@@ -150,3 +150,26 @@ func SearchFriends(c *gin.Context) {
 	users := cd.SearchFriend(uint(ID))
 	utils.RespOKList(c.Writer, users, len(users))
 }
+
+// AddFriends
+// @Summary 添加好友
+// @Tags 用户模块
+// @param userId query string false "用户id"
+// @param targetId query string false "添加用户id"
+// @Success 200 {string} json{"code","msg","data“}
+// @Router /user/searchFriends [post]
+func AddFriends(c *gin.Context) {
+	cd := dao.NewContactDao()
+	userId, _ := strconv.Atoi(c.Request.FormValue("userId"))
+	targetId, _ := strconv.Atoi(c.Request.FormValue("targetId"))
+	if userId == targetId {
+		utils.Failed(c, "无法添加自己为好友")
+		return
+	}
+	code, msg := cd.AddFriend(uint(userId), uint(targetId))
+	if code == 0 {
+		utils.Success(c, msg, nil)
+	} else {
+		utils.Failed(c, msg)
+	}
+}

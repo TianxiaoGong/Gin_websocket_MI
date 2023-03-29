@@ -36,7 +36,7 @@ func SendMsg(c *gin.Context) {
 }
 
 // SendUserMsg
-// @Summary 发送信息
+// @Summary 发送用户信息
 // @Tags 信息模块
 // @Router /msg/sendUserMsg [get]
 func SendUserMsg(c *gin.Context) {
