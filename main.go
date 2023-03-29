@@ -10,7 +10,5 @@ func main() {
 	utils.InitMySQL()
 	utils.InitRedis()
 	r := app.Router()
-	//utils.InitRedis()
-	//utils.InitRedis()
 	r.Run(":8081")
 }

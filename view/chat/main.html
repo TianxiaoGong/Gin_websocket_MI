@@ -14,7 +14,7 @@
 		
 		<!--dstid>TargetId  11=2  10=1 -->
 		<!-- v-if="(item.ismine? item.msg.TargetId==msgcontext.TargetId : item.msg.userId==msgcontext.TargetId )" -->
-        <li class="chat " :class="item.ismine?'mine':'other'" v-for="item in msglist" v-if="(item.ismine? item.msg.TargetId==msgcontext.TargetId : item.msg.userId==msgcontext.TargetId )">
+        <li class="chat " :class="item.ismine?'mine':'other'" v-for="item in msglist" v-if="(item.ismine? item.msg.TargetId==msgcontext.TargetId : item.msg.FromId==msgcontext.TargetId )">
             <div>
             <img class="avatar" :src="item.user.avatar ||'/asset/images/avatar0.png'" />
         </div>

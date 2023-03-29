@@ -17,7 +17,6 @@ import (
 // @Success 200 {string} json{"code","msg","data“}
 // @Router /user/getUserList [get]
 func GetUserList(c *gin.Context) {
-	//data := make([]*models.UserBasic, 10)
 	ud := dao.NewUserDao()
 	data := ud.GetUserList()
 	utils.Success(c, "获取用户列表成功", data)

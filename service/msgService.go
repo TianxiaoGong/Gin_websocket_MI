@@ -2,10 +2,12 @@ package service
 
 import (
 	"Gin_WebSocket_IM/dao"
+	"Gin_WebSocket_IM/utils"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 	"net/http"
+	"strconv"
 )
 
 // 防止跨域站点伪造请求
@@ -42,4 +44,18 @@ func SendMsg(c *gin.Context) {
 func SendUserMsg(c *gin.Context) {
 	md := dao.NewMsgDao()
 	md.Chat(c.Writer, c.Request)
+}
+
+// RedisMsg
+// @Summary 读取Redis信息
+// @Tags 信息模块
+// @Router /user/redisMsg [get]
+func RedisMsg(c *gin.Context) {
+	md := dao.NewMsgDao()
+	userIdA, _ := strconv.Atoi(c.Request.FormValue("userIdA"))
+	userIdB, _ := strconv.Atoi(c.Request.FormValue("userIdB"))
+	fmt.Println("userIDA::", userIdA)
+	fmt.Println("userIDB::", userIdB)
+	RdbMsg := md.RedisMsg(int64(userIdA), int64(userIdB))
+	utils.RespOK(c.Writer, RdbMsg, "读取缓存信息成功")
 }

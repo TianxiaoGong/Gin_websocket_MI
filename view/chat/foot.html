@@ -26,6 +26,13 @@
                     },
                     webSocket:{},
                     win:"main",
+                    com:{
+                        owner_id:"",
+                        name:"",
+                        desc:"",
+                        cate:"",
+                        icon:"",
+                    },
                     txtmsg:"",
                     panelstat:"kbord",
                     txtstat:"kbord",
@@ -43,7 +50,7 @@
                     msgcontext:{
                         TargetId:-1,
                         Type:-1,
-                        userId:userId()
+                        FromId:userId()
                     },
                     plugins:[
                         {
@@ -97,6 +104,7 @@
                     iscomplete:false,
                     duration:0,
                     showprocess:false,
+
                 },
                 created:function(){
                     this.loadfriends();
@@ -221,10 +229,8 @@
                     } ,
                     showmsg:function(user,msg){
                         var data={
-
                         }
-                        data.ismine = userId()==msg.userId;
-                        //console.log(data.ismine,userId(),msg.userid)
+                        data.ismine = userId()==msg.FromId;
                         data.user = user;
                         data.msg = msg;
                         this.msglist = this.msglist.concat(data)
@@ -240,7 +246,6 @@
 
                     },
                     sendtxtmsg:function(txt){
-                        //{id:1,userid:2,dstid:3,cmd:10,media:1,content:"hello"}
                         var msg =this.createmsgcontext();
                         msg.Media=1;
                         msg.Content=txt;
@@ -248,7 +253,6 @@
                         this.webSocket.send(JSON.stringify(msg))
                     },
                     sendpicmsg:function(picurl){
-                        //{id:1,userid:2,dstid:3,cmd:10,media:4,url:"http://www.baidu.com/a/log,jpg"}
                         var msg =this.createmsgcontext();
                         msg.Media=4;
                         msg.url=picurl;
@@ -256,7 +260,6 @@
                         this.webSocket.send(JSON.stringify(msg))
                     },
                     sendaudiomsg:function(url,num){
-                        //{id:1,userid:2,dstid:3,cmd:10,media:3,url:"http://www.a,com/dsturl.mp3",anount:40}
                         var msg =this.createmsgcontext();
                         msg.Media=3;
                         msg.url=url;
@@ -270,6 +273,7 @@
                         this.win = "single";
                         this.title = "和"+user.Name+"聊天中";
                         this.msgcontext.TargetId = parseInt(user.ID);
+                        // this.msgcontext.userId = userId()
                         this.msgcontext.Type = 1;
                     },
                     groupmsg:function(group){
@@ -278,6 +282,7 @@
                         this.title=group.name;
                         this.msgcontext.TargetId = parseInt(group.ID);
                         this.msgcontext.Type = 11;
+
                     },
                     loaduserinfo:function(userid,cb){
                         userid = ""+userid;
@@ -293,7 +298,7 @@
                     },
                     onmessage:function(data){
 
-                        this.loaduserinfo(data.userId,function(user){
+                        this.loaduserinfo(data.FromId,function(user){
                             this.showmsg(user,data)
                         }.bind(this))
 
@@ -341,7 +346,7 @@
                     },
                     loadcommunitys:function(){
                         var that = this;
-                        post("contact/loadcommunity",{userId:userId()},function(res){
+                        post("contact/loadCommunity",{ownerId:userId()},function(res){
                             that.communitys = res.rows ||[];
                         })
                     },
@@ -372,6 +377,28 @@
                                 mui.toast(res.msg);
                             }
                         })
+                    },
+                    //新建群显示
+                    createCom:function (){
+                        this.win = "community"
+                    },
+                    //新建群提交
+                    createcommunity(){
+                        this.com.owner_id = userId()
+                        util.post("/user/createUser",this.user).then(res=>{
+                            console.log(res)
+                            if(res.code!=0){
+                                mui.toast(res.msg)
+                            }else{
+                                // location.replace("//localhost:8081/index")
+                                mui.toast("建群成功")
+                                goBack()
+                            }
+                        })
+                    },
+                    //回到聊天首页
+                    goBack(){
+                        this.win="main"
                     },
                     _joincomunity:function(dstobj){
                         var that = this;
