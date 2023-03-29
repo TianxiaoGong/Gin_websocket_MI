@@ -3,8 +3,8 @@
 
     function upload(dom){
         uploadfile("attach/upload",dom,function(res){
-            if(res.code==0){
-                app.sendpicmsg(res.data)
+            if(res.Code==0){
+                app.sendpicmsg(res.Data)
             }
 
         })
@@ -151,7 +151,7 @@
                                         console.log("ondataavailable");
                                         uploadblob("attach/upload",event.data,".mp3",res=>{
                                             var duration = Math.ceil((new Date().getTime()-this.duration)/1000);
-                                            this.sendaudiomsg(res.data,duration);
+                                            this.sendaudiomsg(res.Data,duration);
                                         })
                                         stream.getTracks().forEach(function (track) {
                                             track.stop();
@@ -258,7 +258,7 @@
                     sendaudiomsg:function(url,num){
                         //{id:1,userid:2,dstid:3,cmd:10,media:3,url:"http://www.a,com/dsturl.mp3",anount:40}
                         var msg =this.createmsgcontext();
-                        msg.media=3;
+                        msg.Media=3;
                         msg.url=url;
                         msg.amount = num;
                         this.showmsg(userInfo(),msg)
