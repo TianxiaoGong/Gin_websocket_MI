@@ -27,7 +27,7 @@ func GetUserList(c *gin.Context) {
 // @Tags 用户模块
 // @param name query string false "用户名"
 // @param password query string false "密码"
-// @param repassword query string false "确认密码"
+// @param Identity query string false "确认密码"
 // @Success 200 {string} json{"code","msg","data“}
 // @Router /user/createUser [post]
 func CreateUser(c *gin.Context) {
@@ -36,7 +36,7 @@ func CreateUser(c *gin.Context) {
 	user.Name = c.Request.FormValue("name")
 	password := c.Request.FormValue("password")
 	repassword := c.Request.FormValue("Identity")
-	fmt.Println(user.Name, "<<<<", password, "<<<", repassword)
+	fmt.Println(user.Name, "<<<<", password, "<<<<", repassword)
 	//user.Name = c.Query("name")
 	//password := c.Query("password")
 	//repassword := c.Query("repassword")
@@ -156,7 +156,7 @@ func SearchFriends(c *gin.Context) {
 // @param userId query string false "用户id"
 // @param targetId query string false "添加用户id"
 // @Success 200 {string} json{"code","msg","data“}
-// @Router /user/searchFriends [post]
+// @Router /user/AddFriends [post]
 func AddFriends(c *gin.Context) {
 	cd := dao.NewContactDao()
 	userId, _ := strconv.Atoi(c.Request.FormValue("userId"))

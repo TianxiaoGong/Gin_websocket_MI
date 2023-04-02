@@ -42,6 +42,6 @@ func Router() *gin.Engine {
 	r.POST("/contact/loadCommunity", service.LoadCommunity)
 
 	//读取redis缓存信息
-	r.POST("/user/redisMsg", service.RedisMsg)
+	r.POST("/getRedisMsg", service.GetRedisMsg)
 	return r
 }

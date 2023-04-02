@@ -9,6 +9,7 @@ func main() {
 	utils.InitConfig()
 	utils.InitMySQL()
 	utils.InitRedis()
+	utils.InitSnowFlake()
 	r := app.Router()
 	r.Run(":8081")
 }

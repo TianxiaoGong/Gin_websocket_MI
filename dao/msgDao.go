@@ -236,8 +236,8 @@ func sendMsg(userId int64, msg []byte) {
 //	return json.Marshal(msg)
 //}
 
-// RedisMsg 获取缓存里面的消息
-func (md *MsgDao) RedisMsg(userIdA int64, userIdB int64) []interface{} {
+// GetRedisMsg 获取缓存里面的消息
+func (md *MsgDao) GetRedisMsg(userIdA int64, userIdB int64) []interface{} {
 	RdbMsg := make([]interface{}, 0)
 	rwLocker.RLock()
 	node, _ := clientMap[userIdA]

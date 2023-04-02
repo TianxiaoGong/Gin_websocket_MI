@@ -46,16 +46,32 @@ func SendUserMsg(c *gin.Context) {
 	md.Chat(c.Writer, c.Request)
 }
 
-// RedisMsg
+// GetRedisMsg
 // @Summary 读取Redis信息
 // @Tags 信息模块
-// @Router /user/redisMsg [get]
-func RedisMsg(c *gin.Context) {
+// @param userIdA query string false "用户A_id"
+// @param userIdB query string false "用户B_id"
+// @Success 200 {string} json{"code","msg","data“}
+// @Router /getRedisMsg [post]
+func GetRedisMsg(c *gin.Context) {
 	md := dao.NewMsgDao()
 	userIdA, _ := strconv.Atoi(c.Request.FormValue("userIdA"))
 	userIdB, _ := strconv.Atoi(c.Request.FormValue("userIdB"))
 	fmt.Println("userIDA::", userIdA)
 	fmt.Println("userIDB::", userIdB)
-	RdbMsg := md.RedisMsg(int64(userIdA), int64(userIdB))
-	utils.RespOK(c.Writer, RdbMsg, "读取缓存信息成功")
+	RdbMsg := md.GetRedisMsg(int64(userIdA), int64(userIdB))
+	utils.Success(c, "读取缓存成功", RdbMsg)
+	//utils.RespOK(c.Writer, RdbMsg, "读取缓存信息成功")
+}
+
+// DeleteRedisMsg
+// @Summary 读取Redis信息
+// @Tags 信息模块
+// @param userIdA query string false "用户A_id"
+// @param userIdB query string false "用户B_id"
+// @param nums query string false "删除记录数目"
+// @Success 200 {string} json{"code","msg","data“}
+// @Router /deleteRedisMsg [post]
+func DeleteRedisMsg(c *gin.Context) {
+
 }

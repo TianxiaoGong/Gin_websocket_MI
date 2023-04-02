@@ -71,6 +71,7 @@ func InitRedis() {
 	pong, err := Rdb.Ping(context.Background()).Result()
 	if err != nil {
 		fmt.Println("init redis error:", err)
+		return
 	} else {
 		fmt.Printf("redis ping result: %s\n", pong)
 	}
@@ -79,6 +80,15 @@ func InitRedis() {
 const (
 	PublishKey = "websocket"
 )
+
+func InitSnowFlake() {
+	if err := InitSF(viper.GetString("snowflake.startTime"), viper.GetInt64("snowflake.machineID")); err != nil {
+		fmt.Println("init snowflake error:", err)
+		return
+	} else {
+		fmt.Println("config SnowFlake initialized")
+	}
+}
 
 // Publish 发布消息到Redis
 func Publish(ctx context.Context, channel string, msg string) error {

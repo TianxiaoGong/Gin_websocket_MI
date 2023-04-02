@@ -18,3 +18,7 @@ timeout:
   HeartbeatHz: 30 #每隔多少秒心跳时间
   HeartbeatMaxTime: 30000 #最大心跳时间 ，超过此就下线
   RedisOnlineTime: 4
+
+snowflake:
+  startTime: "2023-01-01"
+  machineID: 1

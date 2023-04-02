@@ -61,6 +61,8 @@ func (ud *UserDao) FindUserByEmail(email string) models.UserBasic {
 }
 
 func (ud *UserDao) CreateUser(user models.UserBasic) *gorm.DB {
+	id := utils.GenID()
+	user.ID = uint(id)
 	return utils.DB.Create(&user)
 }
 

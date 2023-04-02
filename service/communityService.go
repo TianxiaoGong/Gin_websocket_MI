@@ -36,7 +36,7 @@ func CreateCommunity(c *gin.Context) {
 // @param ownerId query string false "用户id"
 // @param name query string false "群名称"
 // @Success 200 {string} json{"code","msg","data“}
-// @Router /contact/createCommunity [post]
+// @Router /contact/LoadCommunity [post]
 func LoadCommunity(c *gin.Context) {
 	cd := dao.NewCommunityDao()
 	ownerId, _ := strconv.Atoi(c.Request.FormValue("ownerId"))

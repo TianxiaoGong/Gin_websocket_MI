@@ -288,7 +288,7 @@
                         userid = ""+userid;
                         var userinfo = this.usermap[userid];
                         if(!userinfo){
-                            post("user/find",{id:parseInt(userid)},function(res){
+                            post("user/getUserList",{id:parseInt(userid)},function(res){
                                 cb(res.data);
                                 this.usermap[userid] = res.data;
                             }.bind(this))

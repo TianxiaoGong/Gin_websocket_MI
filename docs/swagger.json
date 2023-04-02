@@ -13,6 +13,132 @@
                 "responses": {}
             }
         },
+        "/contact/LoadCommunity": {
+            "post": {
+                "tags": [
+                    "群模块"
+                ],
+                "summary": "加载群列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户id",
+                        "name": "ownerId",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "群名称",
+                        "name": "name",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\",\"msg\",\"data“}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/contact/createCommunity": {
+            "post": {
+                "tags": [
+                    "群模块"
+                ],
+                "summary": "新建群",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户id",
+                        "name": "ownerId",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "群名称",
+                        "name": "name",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\",\"msg\",\"data“}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/deleteRedisMsg": {
+            "post": {
+                "tags": [
+                    "信息模块"
+                ],
+                "summary": "读取Redis信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户A_id",
+                        "name": "userIdA",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户B_id",
+                        "name": "userIdB",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "删除记录数目",
+                        "name": "nums",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\",\"msg\",\"data“}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/getRedisMsg": {
+            "post": {
+                "tags": [
+                    "信息模块"
+                ],
+                "summary": "读取Redis信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户A_id",
+                        "name": "userIdA",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "用户B_id",
+                        "name": "userIdB",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\",\"msg\",\"data“}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/index": {
             "get": {
                 "tags": [
@@ -42,7 +168,7 @@
                 "tags": [
                     "信息模块"
                 ],
-                "summary": "发送信息",
+                "summary": "发送用户信息",
                 "responses": {}
             }
         },
@@ -76,6 +202,36 @@
                 }
             }
         },
+        "/user/AddFriends": {
+            "post": {
+                "tags": [
+                    "用户模块"
+                ],
+                "summary": "添加好友",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户id",
+                        "name": "userId",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "添加用户id",
+                        "name": "targetId",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "code\",\"msg\",\"data“}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/user/createUser": {
             "post": {
                 "tags": [
@@ -98,7 +254,7 @@
                     {
                         "type": "string",
                         "description": "确认密码",
-                        "name": "repassword",
+                        "name": "Identity",
                         "in": "query"
                     }
                 ],
