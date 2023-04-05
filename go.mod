@@ -4,10 +4,12 @@ go 1.19
 
 require (
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2
+	github.com/bwmarrin/snowflake v0.3.0
 	github.com/gin-gonic/gin v1.9.0
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/goccy/go-json v0.10.2
 	github.com/gorilla/websocket v1.5.0
+	github.com/sashabaranov/go-openai v1.6.1
 	github.com/spf13/viper v1.15.0
 	github.com/swaggo/files v1.0.1
 	github.com/swaggo/gin-swagger v1.5.3
@@ -19,7 +21,6 @@ require (
 
 require (
 	github.com/KyleBanks/depth v1.2.1 // indirect
-	github.com/bwmarrin/snowflake v0.3.0 // indirect
 	github.com/bytedance/sonic v1.8.6 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect

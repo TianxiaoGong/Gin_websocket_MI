@@ -11,6 +11,7 @@ import (
 	"github.com/gorilla/websocket"
 	"github.com/spf13/viper"
 	"gopkg.in/fatih/set.v0"
+	"gorm.io/gorm"
 	"net"
 	"net/http"
 	"strconv"
@@ -208,13 +209,18 @@ func sendMsg(userId int64, msg []byte) {
 	userIdStr := strconv.Itoa(int(jsonMsg.FromId))
 	r, err := utils.Rdb.Get(ctx, "online_"+userIdStr).Result()
 	if err != nil {
-		fmt.Println(err) //没有找到
+		fmt.Println("utils.Rdb.Get err:", err) //没有找到
 	}
 	if r != "" {
 		if ok {
 			fmt.Println("[ws]sendMsg >>> userId:", userId, " msg:", string(msg))
 			node.DataQueue <- msg
 		}
+	}
+	//ID:100 ChatGPT
+	if targetIdStr == "100" {
+		ChatGPT(jsonMsg.FromId, jsonMsg.Content)
+		return
 	}
 	var key string
 	if userId > jsonMsg.FromId {
@@ -223,18 +229,60 @@ func sendMsg(userId int64, msg []byte) {
 		key = "msg_" + targetIdStr + "_" + userIdStr
 	}
 	fmt.Println("sendMsg__key:", key)
-	res, e := utils.Rdb.ZAdd(ctx, key, &redis.Z{Score: 1, Member: msg}).Result()
+	res, err := utils.Rdb.ZAdd(ctx, key, &redis.Z{Score: 1, Member: msg}).Result()
 	//res, e := utils.Red.Do(ctx, "zadd", key, 1, jsonMsg).Result() //备用 后续拓展 记录完整msg
-	if e != nil {
-		fmt.Println(e)
+	if err != nil {
+		fmt.Println("err", err)
 	}
-	fmt.Println(res)
+	fmt.Println("redis res::", res)
 }
 
-//// MarshalBinary 需要重写此方法才能完整的msg转byte[]
-//func (msg Message) MarshalBinary() ([]byte, error) {
-//	return json.Marshal(msg)
-//}
+func ChatGPT(userId int64, ask string) {
+	response := utils.GptAI(ask)
+	fmt.Println("ChatGPT response:", response)
+	RespFromGPT(userId, response)
+}
+
+func RespFromGPT(respId int64, response string) {
+	rwLocker.RLock()
+	node, ok := clientMap[respId]
+	rwLocker.RUnlock()
+	ctx := context.Background()
+	targetIdStr := strconv.Itoa(int(respId))
+	//fmt.Println("RespFromGPT_targetIdStr::", targetIdStr)
+	r, err := utils.Rdb.Get(ctx, "online_"+targetIdStr).Result()
+	if err != nil {
+		fmt.Println("utils.Rdb.Get err:", err) //没有找到
+	}
+	responseMsg := models.Message{
+		Model:    gorm.Model{},
+		TargetId: respId,
+		Type:     1,
+		FromId:   100,
+		Media:    1,
+		Content:  response,
+	}
+	resp, _ := json.Marshal(responseMsg)
+	if r != "" {
+		if ok {
+			fmt.Println("[ws]sendMsg >>> respId:", respId, " msg:", string(resp))
+			node.DataQueue <- resp
+		}
+	}
+	var key string
+	if 100 < respId {
+		key = "msg_" + "100" + "_" + targetIdStr
+	} else {
+		key = "msg_" + targetIdStr + "_" + "100"
+	}
+	fmt.Println("sendMsg__key:", key)
+	res, err := utils.Rdb.ZAdd(ctx, key, &redis.Z{Score: 1, Member: resp}).Result()
+	//res, e := utils.Red.Do(ctx, "zadd", key, 1, jsonMsg).Result() //备用 后续拓展 记录完整msg
+	if err != nil {
+		fmt.Println("err", err)
+	}
+	fmt.Println("redis res::", res)
+}
 
 // GetRedisMsg 获取缓存里面的消息
 func (md *MsgDao) GetRedisMsg(userIdA int64, userIdB int64) []interface{} {
