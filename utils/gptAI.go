@@ -9,7 +9,7 @@ import (
 )
 
 func GptAI(ask string) string {
-	config := openai.DefaultConfig("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")
+	config := openai.DefaultConfig("token")
 	proxyUrl, err := url.Parse("http://localhost:7890")
 	if err != nil {
 		panic(err)
